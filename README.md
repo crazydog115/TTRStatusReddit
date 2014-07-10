@@ -9,10 +9,11 @@ Script to update sidebar in /r/toontown with status of Toontown Rewritten server
  * VERSION - Script version. Does not need to be changed
  * UA - User agent for the bot. Does not need to be changed.
 1. Edit your subreddit's sidebar and add the following where you want the table to appear:
-1. Ensure the user running the script has permission to write files to the working directory.
 
         [](#TTRStatusStart)
         [](#TTRStatusEnd)
+
+1. Ensure the user running the script has permission to write files to the working directory.
 
 Run the script on a cron job, as often as you like (at least once per hour).
 
