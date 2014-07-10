@@ -28,7 +28,7 @@ def main():
 
     print 'Checking service statuses.'
     for service in services:
-        url = 'http://ttrstatus.nfshost.com/status.php?'
+        url = 'http://ttrstat.us/status.php?'
         r = requests.get(url+timestamp+'&service='+service)
         # This is checking to make sure ttrstat.us is responding correctly
         if r.status_code == 200:
