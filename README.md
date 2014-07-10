@@ -3,15 +3,15 @@ Script to update sidebar in /r/toontown with status of Toontown Rewritten server
 
 ## Usage
 1. Open settings.py and set the configuration values
-* REDDIT_LOGIN - Username with permission to edit sidebar in SUBREDDIT_NAME
-* REDDIT_PASSWORD - Password for above user
-* SUBREDDIT_NAME - Name of the subreddit having its sidebar updated
-* VERSION - Script version. Does not need to be changed
-* UA - User agent for the bot. Does not need to be changed.
+ * REDDIT_LOGIN - Username with permission to edit sidebar in SUBREDDIT_NAME
+ * REDDIT_PASSWORD - Password for above user
+ * SUBREDDIT_NAME - Name of the subreddit having its sidebar updated
+ * VERSION - Script version. Does not need to be changed
+ * UA - User agent for the bot. Does not need to be changed.
 1. Edit your subreddit's sidebar and add the following where you want the table to appear:
 
         [](#TTRStatusStart)
-        [](#TTRStatusEnd) 
+        [](#TTRStatusEnd)
 
 Run the script on a cron job, as often as you like (at least once per hour).
 
