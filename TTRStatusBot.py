@@ -30,19 +30,8 @@ def main():
         return
     else:
         statuses = json.loads(r.text)
-    
-    for service in statuses:
-        services[service['name']] = {}
-        services[service['name']]['fullName'] = service['fullName']
-        # This needs to be checked for every service
-        if service['lastChanged'] > lastUpdate:
+        if statuses['lastChanged'] > lastUpdate:
             doUpdate = True
-        if service['status'] == 1:
-            services[service['name']]['status'] = 'Online'
-        else:
-            services[service['name']]['status'] = 'Offline'
-
-        services[service['name']]['duration'] = service['duration']
 
     if doUpdate:
         updateFile.write(timestamp)
@@ -53,18 +42,9 @@ def main():
 
         subSettings = reddit.get_settings(settings.SUBREDDIT_NAME)
         sidebarContents = subSettings['description']
-        # Makes header row in table blank
-        sidebarStatusTable = "|||\n|:--------------------|---------:|\n"
-
-        # Adds table rows for services. Makes the status a link so that CSS pseudo selectors can be used
-        for service, status in services.iteritems():
-            sidebarStatusTable += status['fullName']+' | ['+status['status']+' ('+status['duration']+')](http://ttrstat.us/#'+status['status']+")\n"
-
-        # Please do not remove this :)
-        sidebarStatusTable += "\n##[TTR status provided by TTRStat.us](http://ttrstat.us/)\n"
 
         # Replaces the sidebar with the updated table.
-        sidebarContents = re.sub("(\[\]\(#TTRStatusStart\)).*(\[\]\(#TTRStatusEnd\))", r'\1'+'\n\n'+sidebarStatusTable+'\n'+r'\2', sidebarContents, 0, re.DOTALL)
+        sidebarContents = re.sub("(\[\]\(#TTRStatusStart\)).*(\[\]\(#TTRStatusEnd\))", r'\1'+'\n\n'+statuses['table']+'\n'+r'\2', sidebarContents, 0, re.DOTALL)
 
         reddit.update_settings(reddit.get_subreddit(settings.SUBREDDIT_NAME), description=sidebarContents)
         print 'Sidebar updated!'
