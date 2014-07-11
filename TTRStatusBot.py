@@ -12,11 +12,7 @@ except:
 
 
 def main():
-    # Dictionary is ordered so that the table doesn't change order
     services = collections.OrderedDict()
-    services['Game'] = {}
-    services['Website'] = {}
-
     timestamp = str(int(round(time.time())))
 
     # We only update the sidebar when something has changed,
@@ -27,23 +23,26 @@ def main():
     doUpdate = False
 
     print 'Checking service statuses.'
-    for service in services:
-        url = 'http://ttrstat.us/status.php?'
-        r = requests.get(url+timestamp+'&service='+service)
-        # This is checking to make sure ttrstat.us is responding correctly
-        if r.status_code == 200:
-            data = json.loads(r.text)
-            # This needs to be checked for every service
-            if data['lastChanged'] > lastUpdate:
-                doUpdate = True
-            if data['status'] == 1:
-                services[service]['status'] = 'Online'
-            else:
-                services[service]['status'] = 'Offline'
-
-            services[service]['duration'] = data['duration']
+    r = requests.get('http://ttrstat.us/status.php?'+timestamp)
+    # This is checking to make sure ttrstat.us is responding correctly
+    if r.status_code != 200:
+        print 'Error talking to ttrstat.us'
+        return
+    else:
+        statuses = json.loads(r.text)
+    
+    for service in statuses:
+        services[service['name']] = {}
+        services[service['name']]['fullName'] = service['fullName']
+        # This needs to be checked for every service
+        if service['lastChanged'] > lastUpdate:
+            doUpdate = True
+        if service['status'] == 1:
+            services[service['name']]['status'] = 'Online'
         else:
-            services[service] = 'Error'
+            services[service['name']]['status'] = 'Offline'
+
+        services[service['name']]['duration'] = service['duration']
 
     if doUpdate:
         updateFile.write(timestamp)
@@ -59,7 +58,7 @@ def main():
 
         # Adds table rows for services. Makes the status a link so that CSS pseudo selectors can be used
         for service, status in services.iteritems():
-            sidebarStatusTable += service+' | ['+status['status']+' ('+status['duration']+')](http://ttrstat.us/#'+status['status']+")\n"
+            sidebarStatusTable += status['fullName']+' | ['+status['status']+' ('+status['duration']+')](http://ttrstat.us/#'+status['status']+")\n"
 
         # Please do not remove this :)
         sidebarStatusTable += "\n##[TTR status provided by TTRStat.us](http://ttrstat.us/)\n"
