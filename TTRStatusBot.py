@@ -23,7 +23,7 @@ def main():
     doUpdate = False
 
     print 'Checking service statuses.'
-    r = requests.get('http://ttrstat.us/status.php?'+timestamp)
+    r = requests.get('http://ttrstat.us/statusReddit.php?'+timestamp)
     # This is checking to make sure ttrstat.us is responding correctly
     if r.status_code != 200:
         print 'Error talking to ttrstat.us'
