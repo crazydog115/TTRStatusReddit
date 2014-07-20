@@ -18,9 +18,10 @@ def main():
     # We only update the sidebar when something has changed,
     # so read in the file that determines when we last updated
     scriptPath = os.path.dirname(os.path.realpath(__file__))
-    updateFile = open(scriptPath+'/lastUpdate', 'a+')
-    updateFile.seek(0)
+    updateFilePath = scriptPath+'/lastUpdate'
+    updateFile = open(updateFilePath, 'r')
     lastUpdate = updateFile.read()
+    updateFile.close()
     doUpdate = False
 
     print 'Checking service statuses.'
@@ -35,6 +36,7 @@ def main():
             doUpdate = True
 
     if doUpdate:
+        updateFile = open(updateFilePath, 'w+')
         updateFile.write(timestamp)
         updateFile.close()
         reddit = praw.Reddit(user_agent=settings.UA)
