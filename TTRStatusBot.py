@@ -12,7 +12,6 @@ except:
 
 
 def main():
-    services = collections.OrderedDict()
     timestamp = str(int(round(time.time())))
 
     # We only update the sidebar when something has changed,
