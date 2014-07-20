@@ -4,6 +4,7 @@ import time
 import json
 import collections
 import re
+import os
 
 try:
     import settings
@@ -16,7 +17,8 @@ def main():
 
     # We only update the sidebar when something has changed,
     # so read in the file that determines when we last updated
-    updateFile = open('lastUpdate', 'a+')
+    scriptPath = os.path.dirname(os.path.realpath(__file__))
+    updateFile = open(scriptPath+'/lastUpdate', 'a+')
     updateFile.seek(0)
     lastUpdate = updateFile.read()
     doUpdate = False
