@@ -19,9 +19,13 @@ def main():
     # so read in the file that determines when we last updated
     scriptPath = os.path.dirname(os.path.realpath(__file__))
     updateFilePath = scriptPath+'/lastUpdate'
-    updateFile = open(updateFilePath, 'r')
-    lastUpdate = updateFile.read()
-    updateFile.close()
+    try:
+        updateFile = open(updateFilePath, 'r')
+        lastUpdate = updateFile.read()
+        updateFile.close()
+    except:
+        lastUpdate = 0
+
     doUpdate = False
 
     print 'Checking service statuses.'
