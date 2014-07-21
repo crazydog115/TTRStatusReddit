@@ -20,7 +20,7 @@ Run the script on a cron job, as often as you like (at least once per hour).
 The sidebar table can be styled using the following pseudo selectors:
 
         a[href="http://ttrstat.us/#Offline"]
-        and
         a[href="http://ttrstat.us/#Online"]
+        a[href="http://ttrstat.us/#Slow"]
 
 These will style the cells in the right column of the table, depending on that service's status.
