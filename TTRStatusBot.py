@@ -1,7 +1,6 @@
 import praw
 import requests
 import time
-import json
 import collections
 import re
 import os
@@ -29,13 +28,13 @@ def main():
     doUpdate = False
 
     print 'Checking service statuses.'
-    r = requests.get('http://ttrstat.us/statusReddit.php?'+timestamp)
+    r = requests.get('https://ttrstat.us/statusReddit.php?'+timestamp, verify=False)
     # This is checking to make sure ttrstat.us is responding correctly
     if r.status_code != 200:
         print 'Error talking to ttrstat.us'
         return
     else:
-        statuses = json.loads(r.text)
+        statuses = r.json()
         if statuses['lastChanged'] > lastUpdate:
             doUpdate = True
 
@@ -45,7 +44,6 @@ def main():
         updateFile.close()
         reddit = praw.Reddit(user_agent=settings.UA)
         reddit.login(settings.REDDIT_LOGIN, settings.REDDIT_PASSWORD)
-        reddit.config.decode_html_entities = True
 
         subSettings = reddit.get_settings(settings.SUBREDDIT_NAME)
         sidebarContents = subSettings['description']
