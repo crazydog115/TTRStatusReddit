@@ -1,5 +1,5 @@
 #TTR Status
-Script to update sidebar in /r/toontown with status of Toontown Rewritten servers. The sidebar is only modified when a status change is detected
+Script to update sidebar in a subreddit with status of Toontown Rewritten servers. The sidebar is only modified when a status change is detected
 
 ## Usage
 1. Open settings.py and set the configuration values
@@ -15,7 +15,7 @@ Script to update sidebar in /r/toontown with status of Toontown Rewritten server
 
 1. Ensure the user running the script has permission to write files to the working directory.
 
-Run the script on a cron job, as often as you like (at least once per hour).
+Run the script as a scheduled task, as often as you like (at least once per hour).
 
 The sidebar table can be styled using the following pseudo selectors:
 

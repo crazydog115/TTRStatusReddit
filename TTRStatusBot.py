@@ -4,6 +4,7 @@ import time
 import collections
 import re
 import os
+import urllib
 
 try:
     import settings
@@ -28,7 +29,7 @@ def main():
     doUpdate = False
 
     print 'Checking service statuses.'
-    r = requests.get('https://ttrstat.us/statusReddit.php?'+timestamp, verify=False)
+    r = requests.get('http://ttrstat.us/statusReddit.php?'+timestamp, verify=False)
     # This is checking to make sure ttrstat.us is responding correctly
     if r.status_code != 200:
         print 'Error talking to ttrstat.us'
@@ -43,7 +44,7 @@ def main():
         updateFile.write(timestamp)
         updateFile.close()
         reddit = praw.Reddit(user_agent=settings.UA)
-        reddit.login(settings.REDDIT_LOGIN, settings.REDDIT_PASSWORD)
+        reddit.login(urllib.quote_plus(settings.REDDIT_LOGIN), urllib.quote_plus(settings.REDDIT_PASSWORD))
 
         subSettings = reddit.get_settings(settings.SUBREDDIT_NAME)
         sidebarContents = subSettings['description']
