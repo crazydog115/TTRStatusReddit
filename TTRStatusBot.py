@@ -36,7 +36,7 @@ def main():
         return
     else:
         statuses = r.json()
-        if statuses['lastChanged'] > lastUpdate:
+        if int(statuses['lastChanged']) > int(lastUpdate):
             doUpdate = True
 
     if doUpdate:
