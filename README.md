@@ -1,4 +1,4 @@
-#TTR Status
+# TTR Status
 Script to update sidebar in a subreddit with status of Toontown Rewritten servers. The sidebar is only modified when a status change is detected
 
 ## Usage
